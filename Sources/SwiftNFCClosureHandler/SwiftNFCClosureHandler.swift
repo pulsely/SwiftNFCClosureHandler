@@ -6,16 +6,20 @@
 import Foundation
 import CoreNFC
 
+@available(iOS 13.0, *)
+
 protocol NFCReaderDelegate {
     func didReceive(payload: String)
 }
 
-class SwiftNFCClosureHandler: NSObject, ObservableObject {
+
+@available(iOS 13.0, *)
+public class SwiftNFCClosureHandler: NSObject, ObservableObject {
     var session: NFCNDEFReaderSession?
     var delegate: NFCReaderDelegate?
     var scanned_action: ((Data) -> Void)?
     
-    func begin(action: @escaping ((Data) -> Void)) {
+    public func begin(action: @escaping ((Data) -> Void)) {
         self.scanned_action = action
         session = NFCNDEFReaderSession(delegate: self,
                                        queue: DispatchQueue.main,
@@ -23,8 +27,10 @@ class SwiftNFCClosureHandler: NSObject, ObservableObject {
         session?.begin()
     }
 }
+
+
 extension SwiftNFCClosureHandler: NFCNDEFReaderSessionDelegate {
-    func readerSession(_ session: NFCNDEFReaderSession,
+    public func readerSession(_ session: NFCNDEFReaderSession,
                        didDetectNDEFs messages: [NFCNDEFMessage]) {
         DispatchQueue.main.async {
             messages.forEach { message in
@@ -40,12 +46,12 @@ extension SwiftNFCClosureHandler: NFCNDEFReaderSessionDelegate {
             }
         }
     }
-    func readerSession(_ session: NFCNDEFReaderSession,
+    public func readerSession(_ session: NFCNDEFReaderSession,
                        didInvalidateWithError error: Error) {
         print(error.localizedDescription)
     }
     
-    func readerSessionDidBecomeActive(_ session: NFCNDEFReaderSession) {
+    public func readerSessionDidBecomeActive(_ session: NFCNDEFReaderSession) {
         print(">> readerSessionDidBecomeActive")
     }
 
