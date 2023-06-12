@@ -10,7 +10,6 @@ protocol NFCReaderDelegate {
     func didReceive(payload: String)
 }
 
-// https://www.futuremind.com/insights/how-read-nfc-tags-using-corenfc
 class SwiftNFCClosureHandler: NSObject, ObservableObject {
     var session: NFCNDEFReaderSession?
     var delegate: NFCReaderDelegate?
