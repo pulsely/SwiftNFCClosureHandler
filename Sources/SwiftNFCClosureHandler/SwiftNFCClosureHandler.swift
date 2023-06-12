@@ -11,7 +11,7 @@ protocol NFCReaderDelegate {
 }
 
 // https://www.futuremind.com/insights/how-read-nfc-tags-using-corenfc
-class NFCClosureHandler: NSObject, ObservableObject {
+class SwiftNFCClosureHandler: NSObject, ObservableObject {
     var session: NFCNDEFReaderSession?
     var delegate: NFCReaderDelegate?
     var scanned_action: ((Data) -> Void)?
@@ -24,7 +24,7 @@ class NFCClosureHandler: NSObject, ObservableObject {
         session?.begin()
     }
 }
-extension NFCClosureHandler: NFCNDEFReaderSessionDelegate {
+extension SwiftNFCClosureHandler: NFCNDEFReaderSessionDelegate {
     func readerSession(_ session: NFCNDEFReaderSession,
                        didDetectNDEFs messages: [NFCNDEFMessage]) {
         DispatchQueue.main.async {
